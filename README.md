@@ -9,11 +9,11 @@ Version 0.0.1-snapshot
 
 Here you can find an example of web.xml configuration (you can find this in the example folder) :
 
-<web-app>
+	<web-app>
 
-...
+	...
 
-<filter>
+	<filter>
 		<filter-name>activationFilter</filter-name>
 		<!-- ici remplacer cette classe par votre implementation (extends ActivationFilter) -->
 		<filter-class>fr.javageek.jee.filter.MyCustomActivationFilter</filter-class>
@@ -45,7 +45,7 @@ Here you can find an example of web.xml configuration (you can find this in the 
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-...
-</web-app>	
+	...
+	</web-app>	
 
 
