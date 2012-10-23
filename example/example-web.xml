@@ -1,19 +1,12 @@
-jee-activation-filter
-=====================
-
-Filter to activate or desactivate an web application
-
-Sorry but all the documentation and comment are in french :P
-
-Version 0.0.1-snapshot
-
-Here you can find an example of web.xml configuration (you can find this in the example folder) :
-
-<web-app>
-
-...
-
-<filter>
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	
+	<display-name>myapp</display-name>
+	
+	<filter>
 		<filter-name>activationFilter</filter-name>
 		<!-- ici remplacer cette classe par votre implementation (extends ActivationFilter) -->
 		<filter-class>fr.javageek.jee.filter.MyCustomActivationFilter</filter-class>
@@ -45,7 +38,4 @@ Here you can find an example of web.xml configuration (you can find this in the 
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-...
-</web-app>	
-
-
+</web-app>
