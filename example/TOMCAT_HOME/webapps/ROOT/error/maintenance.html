@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<!-- Title -->
+		<title>Clear Construction</title>
+		
+		<!-- Stylesheet -->
+		<link href="/error/css/style.css" rel="stylesheet" />
+		
+		<!-- Javascript (jQuery) imports -->
+		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		
+		<!-- Cufon -->
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/cufon/1.09i/cufon-yui.js"></script>
+		
+		<!-- Font: Droid Sans -->
+		<script type="text/javascript" src="/error/js/droidsans.js"></script>
+		
+		<!-- CountDown -->
+		<script type="text/javascript" src="http://z.cdn.turner.com/cnn/.element/js/3.0/blogs/jquery.lwtCountdown-1.0.js"></script>
+		
+		<!-- Tooltip -->
+		<script type="text/javascript" src="/error/js/tooltip.js"></script>
+		
+		
+		<!-- Javascript activation -->
+		<script type="text/javascript">
+			/* Countdown activation */
+			jQuery(document).ready(function() {
+			
+				Cufon.replace('h1, h2, p, ul#dash_titles')
+			
+				$('#timer').countDown({
+					
+					/* -------- Set here the lauch Date -------- */
+					targetDate: {
+						'day': 		10,
+						'month': 	1,
+						'year': 	2013,
+						'hour': 	11,
+						'min': 		0,
+						'sec': 		0
+					}
+				});
+				
+				/* Email subscribtion placeholder text */
+				$('input[type=text]').focus(function () {
+					if($(this).val() == $(this).attr('defaultValue'))
+    				{
+     					$(this).val('').css('color','#000');
+    				}
+  				});
+  			
+  				$('input[type=text]').blur(function(){
+					if($(this).val() == '')
+					{
+						$(this).val($(this).attr('defaultValue')).css('color','#bcbcbc');
+					} 
+				});
+				
+				/* Social media up/down animation */
+				$('ul#socialmedia li a').hover( function () {
+					$(this).find('img').stop()
+						.animate({
+							marginTop: '-8px'
+						}, 200);
+				},
+				function () {
+					$(this).find('img').stop()
+					.animate({
+						marginTop: '0px'
+					}, 300);
+				});
+				
+			});
+		</script>
+		<!-- End javascript -->
+	</head>
+	<body>
+		<!-- Div to center everything in the page -->
+		<div id="warp">
+			
+			<!-- Company name -->
+			<h1 class="typeface-js">CLEAR CONSTRUCTION</h1>
+			
+			<!-- Create extra border around the yellow block -->
+			<div id="outerline">
+				
+				<!-- Yellow block -->
+				<div id="container">
+				
+					<!-- Under construction text -->
+					<h2 class="typeface-js">We are currently <span class="normal_fontweight">down</span> for maintenance</h2>
+					<p class="typeface-js">If things goes as planned, we should be back in:</p>
+					<!-- End under construction text -->
+					
+					<!-- Countdown timer clock -->
+					<div id="timer">
+					
+						<!-- Div to center the clock -->
+					 	<div id="timer_warp">
+					 		<!-- Weeks -->
+							<div class="dash weeks_dash">
+								<div class="digit">0</div>
+								<div class="digit">0</div>
+							</div>
+							
+							<div class="collin">:</div>	
+							
+							<!-- Days -->
+							<div class="dash days_dash">
+								<div class="digit">0</div>
+								<div class="digit">0</div>
+							</div>
+							
+							<div class="collin">:</div>	
+							
+							<!-- Hours -->
+							<div class="dash hours_dash">
+								<div class="digit">0</div>
+								<div class="digit">0</div>
+							</div>
+							
+							<div class="collin">:</div>	
+							
+							<!-- Minutes -->
+							<div class="dash minutes_dash">
+								<div class="digit">0</div>
+								<div class="digit">0</div>
+							</div>
+							
+							<div class="collin">:</div>		
+							
+							<!-- Seconds -->
+							<div class="dash seconds_dash">
+								<div class="digit">0</div>
+								<div class="digit">0</div>
+							</div>			
+						</div>
+						
+						<div style="clear:both;"></div>	
+						
+						<!-- Digit titles -->			
+						<ul id="dash_titles" class="typeface-js">
+							<li>Weeks</li>
+							<li>Days</li>
+							<li>Hours</li>
+							<li>Minutes</li>
+							<li class="last">Seconds</li>
+						</ul>	
+					</div>
+					<!-- End timer -->
+				</div>
+				<!-- End container -->
+				
+			</div>
+			<!-- End outerline -->
+			
+			<div id="shadow"></div>
+			
+		</div>
+		<!-- End warp -->
+		
+		<!-- Activate Cufon, IE Fix -->
+		<script type="text/javascript"> Cufon.now(); </script>
+	</body>
+</html>

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.javageek</groupId>
   <artifactId>jee-filter</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <name>Jee Activation Filter</name>
   <description>JEE Filter to activate or desactivate an application</description>
   

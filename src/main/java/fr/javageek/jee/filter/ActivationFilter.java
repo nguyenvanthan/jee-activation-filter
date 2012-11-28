@@ -1,6 +1,9 @@
 package fr.javageek.jee.filter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -8,6 +11,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.*;
 
 import org.apache.log4j.Logger;
 
@@ -42,7 +46,11 @@ public abstract class ActivationFilter extends CronFilter implements Filter {
 
 	// pattern pour message d'info sur le delai avant la premiere execution
 	private static final String INFO_DELAY_MSG_PATTERN = "%d minute(s) avant le premier lancement";
-
+	
+	private static final String STATIC_EXTENSIONS_PATTERN = ".*(\\.(?i)(css|js|ico|jpg|png|gif|bmp|swf))$";
+	
+	private static final Pattern STATIC_PATTERN = Pattern.compile(STATIC_EXTENSIONS_PATTERN);
+	
 	private static byte isAlive = 1;
 
 	protected static final int START_SECONDS_DELAY = 0;
@@ -117,11 +125,16 @@ public abstract class ActivationFilter extends CronFilter implements Filter {
 	 */
 	public final void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
-		if (isAlive > 0) {
-			chain.doFilter(request, response);
-		} else {
+		// ne pas filtrer les ressources statiques
+		HttpServletRequest req = (HttpServletRequest)request;
+		System.out.println("Request URI: " + req.getRequestURI());
+		
+		if ( isAlive == 0 
+				&& !STATIC_PATTERN.matcher(req.getRequestURI()).matches() ) {
 			// redirection vers la page de maintenance
 			request.getRequestDispatcher(ERROR_PAGE_URL).forward(request, response);
+		} else {
+			chain.doFilter(request, response);
 		}
 	}
 
