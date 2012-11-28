@@ -22,9 +22,9 @@ public abstract class CronFilter {
     // constante qui servira de cle pour la map JobDataMap (sert au transfert de parametres)
     protected static final String REFERENCE = "jobDataInstanceReference";
 
-    private int default_reload_period = 1; // rechargement automatique toutes les minutes
+    protected int default_reload_period = 1; // rechargement automatique toutes les minutes
     
-    private int default_start_delay = 0; // delai avant la premiere execution
+    protected int default_start_delay = 0; // delai en secondes avant la premiere execution
     
     // commons values used to set job properties
     protected String jobName = "CronFilterJob";
@@ -44,7 +44,7 @@ public abstract class CronFilter {
 		}
 	}
     
-	public void setStartDelay(int seconds) {
+	public void setStartDelayInSeconds(int seconds) {
 		if (seconds > default_start_delay) {
 			default_start_delay = seconds;
 		} else {
@@ -56,7 +56,7 @@ public abstract class CronFilter {
 		return default_reload_period;
 	}
 
-	public int getStartDelay() {
+	public int getStartDelayInSeconds() {
 		return default_start_delay;
 	}
 
@@ -86,7 +86,7 @@ public abstract class CronFilter {
 				scheduler.scheduleJob(job, trigger);
 				scheduler.startDelayed(default_start_delay);
 				LOG.info("--> Auto Reload toutes les " + getReloadPeriodInMinutes() + " minutes");
-				LOG.info("--> Delai avant le 1er lancement " + getStartDelay() + " seconde(s)");
+				LOG.info("--> Delai avant le 1er lancement " + getStartDelayInSeconds() + " seconde(s)");
 			} catch (ParseException e) {
 				LOG.error("Mauvaise expression CRON", e);
 				LOG.error("Echec de creation du CronFilter");

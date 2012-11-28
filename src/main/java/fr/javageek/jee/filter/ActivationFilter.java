@@ -30,6 +30,18 @@ public abstract class ActivationFilter extends CronFilter implements Filter {
 
 	// parametre du filtre: definit le delai en secondes avant la premiere execution
 	private static final String FILTER_PARAMS__START_DELAY = "startDelay";
+	
+	// pattern pour message d'avertissement lors d'un parametre non configure
+	private static final String WARN_MISSING_PARAM_MSG_PATTERN = "********* ATTENTION : le parametre '%s' du filtre est absent, configuration par defaut *********";
+
+	// pattern pour message d'avertissement lors d'un parametre a une mauvaise valeur
+	private static final String WARN_BAD_PARAM_MSG_PATTERN = "********* ATTENTION : le parametre '%s' du filtre est incorrect, configuration par defaut *********";
+
+	// pattern pour message d'info sur la frequence du rechargement
+	private static final String INFO_RELOAD_PERIOD_MSG_PATTERN = "Rechargement chaque %d minute(s)";
+
+	// pattern pour message d'info sur le delai avant la premiere execution
+	private static final String INFO_DELAY_MSG_PATTERN = "%d minute(s) avant le premier lancement";
 
 	private static byte isAlive = 1;
 
@@ -62,18 +74,26 @@ public abstract class ActivationFilter extends CronFilter implements Filter {
 			try {
 				setReloadPeriodInMinutes(Integer.parseInt(checkPeriod));
 			} catch (NumberFormatException ne) {
-				// just ignore 
+				LOG.warn(String.format(WARN_BAD_PARAM_MSG_PATTERN, FILTER_PARAMS_CHECK_PERIOD));
 			}
+		} else {
+			LOG.warn(String.format(WARN_MISSING_PARAM_MSG_PATTERN, FILTER_PARAMS_CHECK_PERIOD));
 		}
-
+		
+		LOG.info(String.format(INFO_RELOAD_PERIOD_MSG_PATTERN, getReloadPeriodInMinutes()));
+		
+		
 		String startDelay = filterConfig.getInitParameter(FILTER_PARAMS__START_DELAY);
 		if (startDelay != null) {
 			try {
-				setStartDelay(Integer.parseInt(startDelay));
+				setStartDelayInSeconds(Integer.parseInt(startDelay));
 			} catch (NumberFormatException ne) {
-				// just ignore 
+				LOG.warn(String.format(WARN_BAD_PARAM_MSG_PATTERN, FILTER_PARAMS__START_DELAY));
 			}
+		} else {
+			LOG.warn(String.format(WARN_MISSING_PARAM_MSG_PATTERN, FILTER_PARAMS__START_DELAY));
 		}
+		LOG.info(String.format(INFO_DELAY_MSG_PATTERN, getStartDelayInSeconds()));
 
 		// on charge le CRON de scrutation
 		startReloadJob();
@@ -139,4 +159,14 @@ public abstract class ActivationFilter extends CronFilter implements Filter {
 	 */
 	protected abstract ActivationFilter.Status getStatus();
 
+	/**
+	 * Change l'url de la page d'indisponibilite
+	 * Methode facultative qui sert a ecraser la valeur definit dans le web.xml
+	 * @param url nouvelle url de la page d'indisponibilite
+	 */
+	protected void setErrorUrlPage(String url) {
+		if (url != null && !"".equals(url.trim())) {
+			ERROR_PAGE_URL = url;
+		}
+	}
 }
